@@ -406,7 +406,7 @@ function Catalog() {
       {!search && (
         <div className="breadcrumb">
           <button className="crumb" onClick={() => { setClassCode(null); setPage(1); }} type="button">All classes</button>
-          {currentClass && <><ChevronRight size={13} /><span className="crumb current">{currentClass.code} · {currentClass.label}</span></>}
+          {currentClass && <><ChevronRight size={13} /><span className="crumb current">{currentClass.code} \u00b7 {currentClass.label}</span></>}
         </div>
       )}
 
@@ -641,7 +641,7 @@ function IssueReturn() {
               <div className="autocomplete">
                 {bookOptions.map((b) => (
                   <button key={b.id} type="button" onClick={() => { setBookId(String(b.id)); setBookQuery(`${b.title} \u2014 ${b.ddc}`); setBookOptions([]); }}>
-                    {b.title} — {b.ddc} ({b.copies_available} left)
+                    {b.title} \u2014 {b.ddc} ({b.copies_available} left)
                   </button>
                 ))}
               </div>
@@ -716,7 +716,7 @@ function ReservationsPanel() {
             <input className="text-input" value={bookQuery} onChange={(e) => { setBookQuery(e.target.value); setBookId(""); }} placeholder="Search a title\u2026" />
             {bookOptions.length > 0 && !bookId && (
               <div className="autocomplete">
-                {bookOptions.map((b) => <button key={b.id} type="button" onClick={() => { setBookId(String(b.id)); setBookQuery(b.title); setBookOptions([]); }}>{b.title} — {b.ddc}</button>)}
+                {bookOptions.map((b) => <button key={b.id} type="button" onClick={() => { setBookId(String(b.id)); setBookQuery(b.title); setBookOptions([]); }}>{b.title} \u2014 {b.ddc}</button>)}
               </div>
             )}
           </Field>
@@ -760,8 +760,8 @@ function FinesPanel() {
   return (
     <>
       <div className="stat-row" style={{ gridTemplateColumns: "repeat(2,1fr)", marginBottom: 20 }}>
-        <div className="stat-card"><div className="stat-num" style={{ color: "var(--brick)" }}>₱{outstanding.toFixed(2)}</div><div className="stat-label">Outstanding fines</div></div>
-        <div className="stat-card"><div className="stat-num" style={{ color: "var(--lamp)" }}>₱{collected.toFixed(2)}</div><div className="stat-label">Collected fines</div></div>
+        <div className="stat-card"><div className="stat-num" style={{ color: "var(--brick)" }}>\u20b1{outstanding.toFixed(2)}</div><div className="stat-label">Outstanding fines</div></div>
+        <div className="stat-card"><div className="stat-num" style={{ color: "var(--lamp)" }}>\u20b1{collected.toFixed(2)}</div><div className="stat-label">Collected fines</div></div>
       </div>
       {loans.length === 0 ? <p className="empty-note">No fines on record.</p> : (
         <div className="book-table-wrap">
@@ -772,7 +772,7 @@ function FinesPanel() {
                 <tr key={l.id}>
                   <td className="book-title-cell">{l.book_title}</td>
                   <td>{l.student_name}</td>
-                  <td className="mono">₱{l.fine_amount.toFixed(2)}</td>
+                  <td className="mono">\u20b1{l.fine_amount.toFixed(2)}</td>
                   <td>{l.fine_paid ? <span className="pill pill-green">Paid</span> : <span className="pill pill-red">Unpaid</span>}</td>
                   <td style={{ display: "flex", gap: 6 }}>
                     {!l.fine_paid && <button className="ghost-btn accent" onClick={() => markPaid(l.id)} type="button">Mark paid</button>}
@@ -830,8 +830,8 @@ function SelfService() {
             <div className="id-avatar">{initialsFor(student.name)}</div>
             <div className="id-info">
               <div className="id-name">{student.name}</div>
-              <div className="id-meta">{student.student_number} · {student.course}</div>
-              {outstandingFines > 0 && <div className="id-alert"><Wallet size={13} /> ₱{outstandingFines.toFixed(2)} in outstanding fines</div>}
+              <div className="id-meta">{student.student_number} \u00b7 {student.course}</div>
+              {outstandingFines > 0 && <div className="id-alert"><Wallet size={13} /> \u20b1{outstandingFines.toFixed(2)} in outstanding fines</div>}
             </div>
           </div>
           <h2>Currently borrowed ({active.length})</h2>
@@ -909,7 +909,7 @@ function Entrance() {
               <div className="id-avatar">{initialsFor(found.name)}</div>
               <div className="id-info">
                 <div className="id-name">{found.name}</div>
-                <div className="id-meta">{found.course} · {found.year} - {found.section}</div>
+                <div className="id-meta">{found.course} \u00b7 {found.year} - {found.section}</div>
                 {found.status === "blocked" && <div className="id-alert"><AlertTriangle size={13} /> {found.reason}</div>}
               </div>
               <button className="primary-btn" onClick={logEntry} type="button">Log entry</button>
@@ -979,7 +979,7 @@ function DigitalResources() {
   return (
     <div className="page">
       <h1>E-library</h1>
-      <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
+      <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap" }}>
         <div className="search-bar" style={{ marginBottom: 0, flex: 1 }}>
           <Search size={16} /><input placeholder="Search\u2026" value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
@@ -1003,7 +1003,7 @@ function DigitalResources() {
           {resources.map((r) => (
             <div className="panel resource-card" key={r.id}>
               <div className="resource-top">
-                <div><span className="pill pill-amber">{r.type}</span><div className="resource-title">{r.title}</div><div className="resource-meta">{r.author} · {r.subject} · {r.year}</div></div>
+                <div><span className="pill pill-amber">{r.type}</span><div className="resource-title">{r.title}</div><div className="resource-meta">{r.author} \u00b7 {r.subject} \u00b7 {r.year}</div></div>
                 <button className="ghost-btn accent" onClick={() => download(r)} type="button"><Download size={13} /> Download ({r.downloads})</button>
               </div>
             </div>
@@ -1314,7 +1314,8 @@ h2{font-family:var(--font-serif); font-size:17px; font-weight:600; margin:0 0 14
 .drawer{position:relative; background:var(--card); border:1px solid var(--hairline); border-radius:6px; padding:22px 14px 14px; text-align:left;}
 .drawer:hover{border-color:var(--brass);} .drawer-pull{position:absolute; top:8px; left:50%; transform:translateX(-50%); width:26px; height:5px; border-radius:3px; background:var(--brass);}
 .drawer-range{font-family:var(--font-serif); font-size:15px; font-weight:700; color:var(--navy);} .drawer-label{font-size:12px; color:var(--ink-dim); margin-top:4px;}
-.book-table-wrap{background:var(--card); border:1px solid var(--hairline); border-radius:8px; overflow:hidden; margin-top:14px;}
+.book-table-wrap{background:var(--card); border:1px solid var(--hairline); border-radius:8px; overflow-x:auto; overflow-y:hidden; margin-top:14px; -webkit-overflow-scrolling:touch;}
+.book-table{min-width:560px;}
 .book-table-title{font-size:12px; color:var(--ink-dim); padding:12px 16px 0;}
 .book-table{width:100%; border-collapse:collapse; font-size:13.5px;}
 .book-table thead th{text-align:left; font-size:11px; color:var(--ink-dim); padding:12px 14px; border-bottom:1px solid var(--hairline); background:var(--paper);}
@@ -1352,5 +1353,27 @@ h2{font-family:var(--font-serif); font-size:17px; font-weight:600; margin:0 0 14
 .resource-list{display:flex; flex-direction:column; gap:10px;} .resource-card{padding:16px 18px;} .resource-top{display:flex; justify-content:space-between; align-items:flex-start; gap:14px;}
 .resource-title{font-family:var(--font-serif); font-size:15px; font-weight:700; margin-top:6px;} .resource-meta{font-size:12px; color:var(--ink-dim); margin-top:3px;}
 .resource-preview{font-size:13px; color:var(--ink-dim); margin-top:12px; padding-top:12px; border-top:1px solid var(--hairline);}
-@media (max-width:860px){ .app{flex-direction:column;} .sidebar{width:100%; flex-direction:row; overflow-x:auto; position:static; height:auto;} .stat-row{grid-template-columns:repeat(2,1fr);} .entrance-layout{grid-template-columns:1fr;} }
+@media (max-width:860px){
+  .app{flex-direction:column;}
+  .sidebar{width:100%; flex-direction:row; overflow-x:auto; position:static; height:auto; -webkit-overflow-scrolling:touch;}
+  .nav-group{flex-direction:row; flex-shrink:0;}
+  .nav-group-label{display:none;}
+  .brand{flex-shrink:0;}
+  .stat-row{grid-template-columns:repeat(2,1fr);}
+  .entrance-layout{grid-template-columns:1fr;}
+  .main-body{padding:0 16px 40px;}
+  .topbar-global{padding:12px 16px;}
+  .page{padding:20px 0 0;}
+  .field-pair{grid-template-columns:1fr;}
+  .drawer-grid{grid-template-columns:repeat(auto-fill, minmax(140px,1fr));}
+  h1{font-size:21px;}
+  .search-bar, .upload-row, .log-toolbar{flex-wrap:wrap;}
+  .resource-top{flex-direction:column;}
+  .id-card{flex-wrap:wrap;}
+  .mini-row{flex-wrap:wrap;}
+}
+@media (max-width:480px){
+  .stat-row{grid-template-columns:1fr;}
+  .login-card{padding:22px;}
+}
 `;
