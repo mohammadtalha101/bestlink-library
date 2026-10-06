@@ -192,14 +192,6 @@ function LoginScreen({ onLogin }) {
         <button className="primary-btn" style={{ width: "100%" }} onClick={submit} disabled={busy} type="button">
           {busy ? <Loader2 size={15} className="spin" /> : "Sign in"}
         </button>
-        <details className="demo-hint">
-          <summary>Seeded accounts</summary>
-          <ul>
-            <li><b>admin</b> / admin123</li>
-            <li><b>librarian</b> / lib123</li>
-            <li>any real student number / same number as password</li>
-          </ul>
-        </details>
       </div>
     </div>
   );
